@@ -2,10 +2,13 @@
 import { ref, onMounted } from "vue";
 import Vditor from "vditor";
 import "vditor/dist/index.css";
+import { saveAs } from "file-saver";
 
 import HeaderNav from "./components/HeaderNav.vue";
+import SideBar from "./components/SiderBar.vue";
 import * as defaultData from "../assets/statics/default.json";
 const DefaultText: string = defaultData.content;
+const PlaceHolder: string = defaultData.placeholder;
 
 const vditor = ref();
 
@@ -27,10 +30,14 @@ onMounted(() => {
       max: 102400,
     },
     cache: {
-      enable: true,
+      enable: false,
     },
   });
 });
+
+function saveMarkdown() {
+  console.log("save markdown");
+}
 </script>
 
 <template>
@@ -38,7 +45,7 @@ onMounted(() => {
     <el-container>
       <HeaderNav />
       <el-container>
-        <el-aside width="200px">Aside</el-aside>
+        <SideBar />
         <el-main>
           <div id="vditor"></div>
         </el-main>
@@ -50,20 +57,6 @@ onMounted(() => {
 <style lang="less">
 @import "src/assets/styles/style";
 .common-layout {
-  .el-aside {
-    position: fixed;
-    top: 60px;
-    left: 0;
-    width: 200px;
-    height: calc(100% - 60px);
-    background-color: #fff;
-    box-shadow: 0 2px 12px 2px rgba(0, 0, 0, 0.1);
-    transition:
-      border 0.5s cubic-bezier(0.455, 0.03, 0.515, 0.955),
-      background 0.5s cubic-bezier(0.455, 0.03, 0.515, 0.955);
-    z-index: 10;
-  }
-
   .el-main {
     position: fixed;
     top: 60px;
@@ -107,7 +100,7 @@ onMounted(() => {
     .vditor {
       height: calc(100vh - 60px);
       padding: 10px;
-      margin: 0px auto;
+      margin: 0 auto;
     }
   }
 }

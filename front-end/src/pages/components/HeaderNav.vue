@@ -34,7 +34,9 @@
                 src="/src/assets/icons/pdf.svg"
                 alt="CloudText"
               />
-              <span class="dropdown-text">导出PDF</span>
+              <span class="dropdown-text" @click="onOutputPDFClicked"
+                >导出PDF</span
+              >
             </el-dropdown-item>
             <el-dropdown-item>
               <img
@@ -42,7 +44,9 @@
                 src="/src/assets/icons/markdown-icon.svg"
                 alt="CloudText"
               />
-              <span class="dropdown-text">导出MarkDown</span>
+              <span class="dropdown-text" @click="onOutputMDClicked"
+                >导出MarkDown</span
+              >
             </el-dropdown-item>
             <el-dropdown-item>
               <img
@@ -50,7 +54,9 @@
                 src="/src/assets/icons/html.svg"
                 alt="CloudText"
               />
-              <span class="dropdown-text">导出HTML</span>
+              <span class="dropdown-text" @click="onOutputHTMLClicked"
+                >导出HTML</span
+              >
             </el-dropdown-item>
           </el-dropdown-menu>
         </template>
@@ -81,6 +87,20 @@
     </el-button-group>
   </el-header>
 </template>
+
+<script setup>
+function onOutputPDFClicked() {
+  console.log("onOutputPDFClicked");
+}
+
+function onOutputMDClicked() {
+  console.log("onOutputMDClicked");
+}
+
+function onOutputHTMLClicked() {
+  console.log("onOutputHTMLClicked");
+}
+</script>
 
 <script>
 import "hint.css";
