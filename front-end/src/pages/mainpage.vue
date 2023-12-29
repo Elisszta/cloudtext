@@ -9,7 +9,6 @@ import SideBar from "./components/SiderBar.vue";
 import * as defaultData from "../assets/statics/default.json";
 const DefaultText: string = defaultData.content;
 const PlaceHolder: string = defaultData.placeholder;
-
 const vditor = ref();
 
 onMounted(() => {
@@ -18,6 +17,12 @@ onMounted(() => {
     height: "100%",
     width: "100%",
     minWidth: "500px",
+    toolbar: [
+      'headings', 'bold', 'italic', 'strike', 'link', '|',
+      'list', 'ordered-list', 'check', 'outdent', 'indent', '|',
+      'quote', 'line', 'code', 'inline-code', '|',
+      'upload', 'record', 'table', '|', 'undo', 'redo', '|',
+      'edit-mode', 'both', 'preview', 'outline', 'export'],
     toolbarConfig: {
       pin: true,
     },
@@ -32,18 +37,41 @@ onMounted(() => {
     cache: {
       enable: false,
     },
+    placeholder: PlaceHolder,
   });
 });
 
 function saveMarkdown() {
   console.log("save markdown");
+  const blob = new Blob([vditor.value.getValue()], {
+    type: "text/plain;charset=utf-8",
+  });
+  saveAs(blob, "output.md");
+}
+
+function saveHTML() {
+  console.log("save html");
+  const blob = new Blob([vditor.value.getHTML()], {
+    type: "text/plain;charset=utf-8",
+  });
+  saveAs(blob, "output.html");
+}
+
+function save() {
+  console.log("save");
+  const content = vditor.value.getValue();
+  const jsonContent = JSON.stringify({ content });
+  const blob = new Blob([jsonContent], {
+    type: "text/plain;charset=utf-8",
+  });
+  saveAs(blob, "output.json");
 }
 </script>
 
 <template>
   <div class="common-layout">
     <el-container>
-      <HeaderNav />
+      <HeaderNav @onOutputMDClicked="saveMarkdown" @onOutputHTMLClicked="saveHTML" @onSaveButtonClicked="save" />
       <el-container>
         <SideBar />
         <el-main>
@@ -56,6 +84,7 @@ function saveMarkdown() {
 
 <style lang="less">
 @import "src/assets/styles/style";
+
 .common-layout {
   .el-main {
     position: fixed;

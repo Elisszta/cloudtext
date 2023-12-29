@@ -1,104 +1,69 @@
 <template>
   <el-header>
     <router-link to="/" class="header-link">
-      <img
-        class="mark-markdown"
-        src="/src/assets/icons/markdown-icon.svg"
-        alt="CloudText"
-      />
+      <img class="mark-markdown" src="/src/assets/icons/markdown-icon.svg" alt="CloudText" />
       <strong class="header-text">CloudText</strong>
     </router-link>
     <el-button-group>
       <span class="hint--bottom header-icon" aria-label="登录">
         <router-link to="/login">
-          <img
-            class="icon-button"
-            src="/src/assets/icons/login.svg"
-            alt="CloudText"
-          />
+          <img class="icon-button" src="/src/assets/icons/login.svg" alt="CloudText" />
         </router-link>
       </span>
       <el-dropdown>
         <span class="header-icon" aria-label="导出">
-          <img
-            class="icon-button"
-            src="/src/assets/icons/download.svg"
-            alt="CloudText"
-          />
+          <img class="icon-button" src="/src/assets/icons/download.svg" alt="CloudText" />
         </span>
         <template #dropdown>
           <el-dropdown-menu>
             <el-dropdown-item>
-              <img
-                class="dropdown-icon"
-                src="/src/assets/icons/pdf.svg"
-                alt="CloudText"
-              />
-              <span class="dropdown-text" @click="onOutputPDFClicked"
-                >导出PDF</span
-              >
+              <img class="dropdown-icon" src="/src/assets/icons/pdf.svg" alt="CloudText" />
+              <span class="dropdown-text" @click="onOutputPDFClicked">导出PDF</span>
             </el-dropdown-item>
             <el-dropdown-item>
-              <img
-                class="dropdown-icon"
-                src="/src/assets/icons/markdown-icon.svg"
-                alt="CloudText"
-              />
-              <span class="dropdown-text" @click="onOutputMDClicked"
-                >导出MarkDown</span
-              >
+              <img class="dropdown-icon" src="/src/assets/icons/markdown-icon.svg" alt="CloudText" />
+              <span class="dropdown-text" @click="onOutputMDClicked">导出MarkDown</span>
             </el-dropdown-item>
             <el-dropdown-item>
-              <img
-                class="dropdown-icon"
-                src="/src/assets/icons/html.svg"
-                alt="CloudText"
-              />
-              <span class="dropdown-text" @click="onOutputHTMLClicked"
-                >导出HTML</span
-              >
+              <img class="dropdown-icon" src="/src/assets/icons/html.svg" alt="CloudText" />
+              <span class="dropdown-text" @click="onOutputHTMLClicked">导出HTML</span>
             </el-dropdown-item>
           </el-dropdown-menu>
         </template>
       </el-dropdown>
-      <span
-        class="hint--bottom header-icon"
-        @click="onSaveButtonClicked"
-        aria-label="保存"
-      >
-        <img
-          class="icon-button"
-          src="/src/assets/icons/save.svg"
-          alt="CloudText"
-        />
+      <span class="hint--bottom header-icon" @click="onSaveButtonClicked" aria-label="保存">
+        <img class="icon-button" src="/src/assets/icons/save.svg" alt="CloudText" />
       </span>
 
-      <span
-        class="hint--bottom header-icon"
-        @click="onFullScreenClick"
-        aria-label="全屏"
-      >
-        <img
-          class="icon-button"
-          src="/src/assets/icons/full-screen.svg"
-          alt="CloudText"
-        />
+      <span class="hint--bottom header-icon" @click="onFullScreenClick" aria-label="全屏">
+        <img class="icon-button" src="/src/assets/icons/full-screen.svg" alt="CloudText" />
       </span>
     </el-button-group>
   </el-header>
 </template>
 
 <script setup>
+import { defineEmits } from "vue";
+const emits = defineEmits([]);
+
 function onOutputPDFClicked() {
-  console.log("onOutputPDFClicked");
+  emits("onOutputPDFClicked", 1)
+  console.log("onOutputPDFClicked")
 }
 
 function onOutputMDClicked() {
-  console.log("onOutputMDClicked");
+  emits("onOutputMDClicked", 1)
+  console.log("onOutputMDClicked")
 }
 
 function onOutputHTMLClicked() {
-  console.log("onOutputHTMLClicked");
+  emits("onOutputHTMLClicked", 1)
+  console.log("onOutputHTMLClicked")
+}
+
+function onSaveButtonClicked() {
+  emits("onSaveButtonClicked", 1)
+  console.log("onSaveButtonClicked")
 }
 </script>
 
@@ -190,6 +155,7 @@ export default {
       height: 40px;
       margin-right: 10px;
     }
+
     .header-text {
       font-size: 20px;
       font-weight: 600;
