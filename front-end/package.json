@@ -15,6 +15,7 @@
   "devDependencies": {
     "@types/file-saver": "^2.0.7",
     "@vitejs/plugin-vue": "^4.5.2",
+    "axios": "^1.6.3",
     "element-plus": "^2.4.4",
     "hint.css": "^3.0.0",
     "less": "^4.2.0",
