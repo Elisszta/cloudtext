@@ -32,7 +32,6 @@ onMounted(() => {
     value: DefaultText,
     counter: {
       enable: true,
-      max: 102400,
     },
     cache: {
       enable: false,
