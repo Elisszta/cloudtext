@@ -103,6 +103,8 @@ export default {
                         },
                         data: {
                             uname: _this.ruleForm.uname,
+                            userName: "hi",
+                            fileName: "wahtr",
                             password: _this.ruleForm.password,
                         },
                     }).then((res) => {

@@ -29,7 +29,7 @@ public class FileController {
         }
     }
 
-    @DeleteMapping("/rm")
+    @PostMapping("/rm")
     public Result<FileResponse> rmFileController(@RequestBody SaveRequest request) {
         User requestUser = userDao.findByUname(request.getUserName());
         if (requestUser == null) {
@@ -43,7 +43,7 @@ public class FileController {
         }
     }
 
-    @GetMapping("/getContext")
+    @PostMapping("/getContext")
     public Result<FileResponse> getFileContextController(@RequestBody GetRequest request) {
         User requestUser = userDao.findByUname(request.getUserName());
         if (requestUser == null) {
@@ -53,7 +53,7 @@ public class FileController {
         return Result.success(response, "Get file context success!");
     }
 
-    @GetMapping("/getFileList")
+    @PostMapping("/getFileList")
     public Result<FileListResponse> getFileList(@RequestBody GetRequest request) {
         User requestUser = userDao.findByUname(request.getUserName());
         if (requestUser == null) {
