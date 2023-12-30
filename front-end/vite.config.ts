@@ -5,7 +5,10 @@ import vue from "@vitejs/plugin-vue";
 export default defineConfig({
   plugins: [vue()],
   server: {
+    port: 8888,
+    cors: true, // 允许跨域
     host: "localhost",
     hmr: true,
   },
+  base: "./", // 设置打包路径
 });

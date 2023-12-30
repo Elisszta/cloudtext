@@ -1,0 +1,8 @@
+{
+    "productName": "CloudText",
+    "files": ["./electron/main.js", "./dist"],
+    "extraFiles": [],
+    "directories": {
+      "output": "./buileder"
+    }
+  }
