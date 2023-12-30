@@ -7,10 +7,15 @@
     <el-input v-model="inputValue" @change="handleInput" placeholder="请输入标题">
     </el-input>
     <el-button-group>
-      <span class="hint--bottom header-icon" aria-label="登录">
-        <router-link to="/login">
-          <img class="icon-button" src="/src/assets/icons/login.svg" alt="CloudText" />
-        </router-link>
+      <span class="hint--bottom header-icon" :aria-label="userInfo && userInfo.uname ? '登出' : '登录'">
+        <template v-if="userInfo && userInfo.uname">
+          <img class="icon-button" src="/src/assets/icons/logout.svg" alt="CloudText" @click="handleLogOut" />
+        </template>
+        <template v-else>
+          <router-link to="/login">
+            <img class="icon-button" src="/src/assets/icons/login.svg" alt="CloudText" />
+          </router-link>
+        </template>
       </span>
       <el-dropdown>
         <span class="header-icon" aria-label="导出">
@@ -36,7 +41,6 @@
       <span class="hint--bottom header-icon" @click="onSaveButtonClicked" aria-label="保存">
         <img class="icon-button" src="/src/assets/icons/save.svg" alt="CloudText" />
       </span>
-
       <span class="hint--bottom header-icon" @click="onFullScreenClick" aria-label="全屏">
         <img class="icon-button" src="/src/assets/icons/full-screen.svg" alt="CloudText" />
       </span>
@@ -45,9 +49,11 @@
 </template>
 
 <script setup>
-import { defineEmits, inject } from "vue";
+import { defineEmits, inject, ref } from "vue";
+
 const emits = defineEmits([]);
 const inputValue = inject('titleValue')
+const userInfo = ref(JSON.parse(sessionStorage.getItem("userInfo") || "{}"));
 
 function onOutputPDFClicked() {
   emits("onOutputPDFClicked", 1)
@@ -70,7 +76,12 @@ function onSaveButtonClicked() {
 }
 
 function handleInput() {
-  console.log(inputValue)
+  console.log(inputyValue)
+}
+
+function handleLogOut() {
+  sessionStorage.removeItem("userInfo");
+  location.reload();
 }
 </script>
 

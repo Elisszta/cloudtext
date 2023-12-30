@@ -66,7 +66,7 @@ function saveHTML() {
 }
 
 function savePDF() {
-
+  alert("Work in progress, 请使用编辑器中导出菜单导出PDF");
 }
 
 function save() {
