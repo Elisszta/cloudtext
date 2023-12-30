@@ -7,11 +7,11 @@ import { saveAs } from "file-saver";
 import HeaderNav from "./components/HeaderNav.vue";
 import SideBar from "./components/SiderBar.vue";
 import * as defaultData from "../assets/statics/default.json";
-const DefaultText: string = defaultData.content;
-const PlaceHolder: string = defaultData.placeholder;
+const mdText: string = defaultData.context;
+const mdTitle: string = defaultData.fileName;
 const vditor = ref();
 
-const titleValue = ref('');
+const titleValue = ref(mdTitle);
 provide('titleValue', titleValue)
 
 onMounted(() => {
@@ -32,7 +32,7 @@ onMounted(() => {
     preview: {
       delay: 100,
     },
-    value: DefaultText,
+    value: mdText,
     counter: {
       enable: true,
       max: 51200,
@@ -40,7 +40,6 @@ onMounted(() => {
     cache: {
       enable: false,
     },
-    placeholder: PlaceHolder,
   });
 });
 
