@@ -4,6 +4,8 @@
       <img class="mark-markdown" src="/src/assets/icons/markdown-icon.svg" alt="CloudText" />
       <strong class="header-text">CloudText</strong>
     </router-link>
+    <el-input v-model="inputValue" @change="handleInput" placeholder="请输入标题">
+    </el-input>
     <el-button-group>
       <span class="hint--bottom header-icon" aria-label="登录">
         <router-link to="/login">
@@ -43,8 +45,9 @@
 </template>
 
 <script setup>
-import { defineEmits } from "vue";
+import { defineEmits, inject } from "vue";
 const emits = defineEmits([]);
+const inputValue = inject('titleValue')
 
 function onOutputPDFClicked() {
   emits("onOutputPDFClicked", 1)
@@ -65,6 +68,10 @@ function onSaveButtonClicked() {
   emits("onSaveButtonClicked", 1)
   console.log("onSaveButtonClicked")
 }
+
+function handleInput() {
+  console.log(inputValue)
+}
 </script>
 
 <script>
@@ -73,7 +80,9 @@ import "hint.css";
 export default {
   name: "HeaderNav",
   data() {
-    return {};
+    return {
+      inputValue: '',
+    };
   },
   methods: {
     launchFullScreen() {
@@ -143,6 +152,12 @@ export default {
     border 0.5s cubic-bezier(0.455, 0.03, 0.515, 0.955),
     background 0.5s cubic-bezier(0.455, 0.03, 0.515, 0.955);
 
+  .el-input {
+    position: relative;
+    margin-left: 200px;
+    margin-right: 250px;
+  }
+
   .header-link {
     position: fixed;
     left: 20px;
@@ -168,6 +183,7 @@ export default {
     position: fixed;
     right: 20px;
     display: flex;
+    margin-left: 20px;
 
     .header-icon {
       margin: 0 10px;

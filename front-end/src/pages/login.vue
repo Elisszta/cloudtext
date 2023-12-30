@@ -15,6 +15,9 @@
                 <el-button type="primary" @click="submitForm('ruleForm')" v-loading="loading">登录</el-button>
                 <el-button @click="resetForm('ruleForm')">重置</el-button>
                 <el-button style="margin-left: 10px" @click="regist('ruleForm')" v-loading="loading">注册</el-button>
+                <el-button style="margin-left: 10px" @click="regist('ruleForm')" v-loading="loading">
+                    <router-link to="/" class="header-link">首页
+                    </router-link></el-button>
             </div>
         </el-card>
     </div>
@@ -132,7 +135,11 @@ export default {
 <style scoped>
 /* 设置登录面板居中，宽度为400px */
 .box-card {
-    margin: auto auto;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin: 0;
     width: 400px;
 }
 

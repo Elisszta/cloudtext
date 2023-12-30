@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
+import { ref, onMounted, provide } from "vue";
 import Vditor from "vditor";
 import "vditor/dist/index.css";
 import { saveAs } from "file-saver";
@@ -10,6 +10,9 @@ import * as defaultData from "../assets/statics/default.json";
 const DefaultText: string = defaultData.content;
 const PlaceHolder: string = defaultData.placeholder;
 const vditor = ref();
+
+const titleValue = ref('');
+provide('titleValue', titleValue)
 
 onMounted(() => {
   vditor.value = new Vditor("vditor", {
@@ -32,6 +35,7 @@ onMounted(() => {
     value: DefaultText,
     counter: {
       enable: true,
+      max: 51200,
     },
     cache: {
       enable: false,
@@ -42,28 +46,34 @@ onMounted(() => {
 
 function saveMarkdown() {
   console.log("save markdown");
+  const title = titleValue.value + '.md';
   const blob = new Blob([vditor.value.getValue()], {
     type: "text/plain;charset=utf-8",
   });
-  saveAs(blob, "output.md");
+  saveAs(blob, title);
 }
 
 function saveHTML() {
   console.log("save html");
+  const title = titleValue.value + '.html';
   const blob = new Blob([vditor.value.getHTML()], {
     type: "text/plain;charset=utf-8",
   });
-  saveAs(blob, "output.html");
+  saveAs(blob, title);
 }
 
 function save() {
   console.log("save");
-  const content = vditor.value.getValue();
-  const jsonContent = JSON.stringify({ content });
+  const jsonData = {
+    context: vditor.value.getValue(),
+    fileName: titleValue.value
+  }
+  const jsonContent = JSON.stringify(jsonData);
+  const title = titleValue.value + '.json';
   const blob = new Blob([jsonContent], {
     type: "text/plain;charset=utf-8",
   });
-  saveAs(blob, "output.json");
+  saveAs(blob, title);
 }
 </script>
 
