@@ -9,30 +9,30 @@
     <el-button-group>
       <span class="hint--bottom header-icon" :aria-label="userInfo && userInfo.uname ? '登出' : '登录'">
         <template v-if="userInfo && userInfo.uname">
-          <img class="icon-button" src="/src/assets/icons/logout.svg" alt="CloudText" @click="handleLogOut" />
+          <img class="icon-button" src="/src/assets/icons/logout.svg" alt="Logout" @click="handleLogOut" />
         </template>
         <template v-else>
           <router-link to="/login">
-            <img class="icon-button" src="/src/assets/icons/login.svg" alt="CloudText" />
+            <img class="icon-button" src="/src/assets/icons/login.svg" alt="Login" />
           </router-link>
         </template>
       </span>
       <el-dropdown>
         <span class="header-icon" aria-label="导出">
-          <img class="icon-button" src="/src/assets/icons/download.svg" alt="CloudText" />
+          <img class="icon-button" src="/src/assets/icons/download.svg" alt="Output" />
         </span>
         <template #dropdown>
           <el-dropdown-menu>
             <el-dropdown-item>
-              <img class="dropdown-icon" src="/src/assets/icons/pdf.svg" alt="CloudText" />
+              <img class="dropdown-icon" src="/src/assets/icons/pdf.svg" alt="PDF" />
               <span class="dropdown-text" @click="onOutputPDFClicked">导出PDF</span>
             </el-dropdown-item>
             <el-dropdown-item>
-              <img class="dropdown-icon" src="/src/assets/icons/markdown-icon.svg" alt="CloudText" />
+              <img class="dropdown-icon" src="/src/assets/icons/markdown-icon.svg" alt="MD" />
               <span class="dropdown-text" @click="onOutputMDClicked">导出MarkDown</span>
             </el-dropdown-item>
             <el-dropdown-item>
-              <img class="dropdown-icon" src="/src/assets/icons/html.svg" alt="CloudText" />
+              <img class="dropdown-icon" src="/src/assets/icons/html.svg" alt="HTML" />
               <span class="dropdown-text" @click="onOutputHTMLClicked">导出HTML</span>
             </el-dropdown-item>
           </el-dropdown-menu>
@@ -49,7 +49,7 @@
 </template>
 
 <script setup>
-import { defineEmits, inject, ref } from "vue";
+import { inject, ref } from "vue";
 
 const emits = defineEmits([]);
 const inputValue = inject('titleValue')

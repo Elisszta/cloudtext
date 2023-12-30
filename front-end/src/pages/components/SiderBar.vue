@@ -12,12 +12,56 @@
         </template>
       </span>
     </div>
+    <div class="fileListNav">
+      <div v-for="(item, index) in fileList" :key="index" class="listIter">
+        <span class="filename" @click="onItemClicked(item)">{{ item }}</span>
+        <el-button @click="onDeleteClicked(item)">
+          <img class="icon-button" src="/src/assets/icons/delete.svg" alt="Delete" />
+        </el-button>
+      </div>
+    </div>
   </el-aside>
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
+import axios from 'axios'
+
 const userInfo = ref(JSON.parse(sessionStorage.getItem("userInfo") || "{}"));
+const fileList = ref([]);
+const emits = defineEmits([]);
+
+onMounted(() => {
+  axios({
+    url: "http://localhost:8080/file/getFileList",
+    method: "post",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    data: {
+      userName: userInfo.value.uname,
+      fileName: "Whatsoever"
+    },
+  }).then((res) => {
+    if (res.data.code === "0") {
+      fileList.value = res.data.data.list
+      console.log(res.data.data.list);
+    } else {
+    }
+  });
+});
+
+function onItemClicked(title) {
+  console.log("onItemClicked");
+  console.log(title);
+  emits("onItemClicked", title)
+}
+
+function onDeleteClicked(title) {
+  console.log("onDeleteClicked");
+  console.log(title);
+  emits("onDeleteClicked", title)
+}
 </script>
 
 <style>
@@ -48,7 +92,42 @@ const userInfo = ref(JSON.parse(sessionStorage.getItem("userInfo") || "{}"));
 
     .name-text {
       text-align: center;
+    }
+  }
 
+  .fileListNav {
+    height: calc(100% - 55px);
+    overflow: auto;
+
+    .listIter {
+      height: 50px;
+      line-height: 50px;
+      padding-left: 20px;
+      border-bottom: 1px solid #ebeef5;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      /* 将内容水平分散对齐 */
+      align-items: center;
+      /* 垂直居中对齐 */
+
+      &:hover {
+        background-color: #f5f7fa;
+      }
+
+      .filename {
+        flex-grow: 1;
+        white-space: nowrap;
+        /* 不换行 */
+        overflow: hidden;
+        /* 溢出隐藏 */
+        text-overflow: ellipsis;
+        /* 显示省略号 */
+      }
+
+      .el-button {
+        border: none;
+      }
     }
   }
 }

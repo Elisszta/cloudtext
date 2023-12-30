@@ -3,20 +3,20 @@ import { ref, onMounted, provide } from "vue";
 import Vditor from "vditor";
 import "vditor/dist/index.css";
 import { saveAs } from "file-saver";
+import axios from "axios";
 
 import HeaderNav from "./components/HeaderNav.vue";
 import SideBar from "./components/SiderBar.vue";
 import * as defaultData from "../assets/statics/default.json";
 
 const currFile = ref(defaultData);
-const mdText: string = currFile.value.context;
-const mdTitle: string = currFile.value.fileName;
+const mdContent = ref(currFile.value.context);
+const titleValue = ref(currFile.value.fileName);
 const vditor = ref();
 
 const userInfo = ref(JSON.parse(sessionStorage.getItem("userInfo") || "{}"));
 
-const titleValue = ref(mdTitle);
-provide('titleValue', titleValue)
+provide('titleValue', titleValue);
 
 onMounted(() => {
   vditor.value = new Vditor("vditor", {
@@ -36,7 +36,7 @@ onMounted(() => {
     preview: {
       delay: 100,
     },
-    value: mdText,
+    value: mdContent.value,
     counter: {
       enable: true,
       max: 51200,
@@ -82,11 +82,64 @@ function save() {
     userName: userInfo.value.uname,
   };
   const jsonContent = JSON.stringify(jsonData);
-  const title = titleValue.value + '.json';
-  const blob = new Blob([jsonContent], {
-    type: "text/plain;charset=utf-8",
+  axios({
+    url: "http://localhost:8080/file/save",
+    method: "post",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    data: jsonContent,
+  }).then((res) => {
+    if (res.data.code === "0") {
+      alert("保存成功");
+    } else {
+      alert("保存失败");
+    }
+    location.reload();
   });
-  saveAs(blob, title);
+}
+
+function selectItem(title: String) {
+  console.log("selectItem");
+  console.log(title);
+  axios({
+    url: "http://localhost:8080/file/getContext",
+    method: "post",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    data: {
+      userName: userInfo.value.uname,
+      fileName: title
+    },
+  }).then((res) => {
+    if (res.data.code === "0") {
+      console.log(res.data.data);
+      mdContent.value = res.data.data.context;
+      vditor.value.setValue(mdContent.value);
+      titleValue.value = res.data.data.fileName;
+    } else {
+    }
+  });
+}
+
+function deleteItem(title: String) {
+  console.log("deleteItem");
+  console.log(title);
+  axios({
+    url: "http://localhost:8080/file/rm",
+    method: "post",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    data: {
+      userName: userInfo.value.uname,
+      fileName: title,
+      context: ""
+    },
+  }).then(() => {
+    location.reload();
+  });
 }
 </script>
 
@@ -96,7 +149,7 @@ function save() {
       <HeaderNav @onOutputMDClicked="saveMarkdown" @onOutputHTMLClicked="saveHTML" @onOutputPDFClicked="savePDF"
         @onSaveButtonClicked="save" />
       <el-container>
-        <SideBar />
+        <SideBar @onItemClicked="selectItem" @onDeleteClicked="deleteItem" />
         <el-main>
           <div id="vditor"></div>
         </el-main>
