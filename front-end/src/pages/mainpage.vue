@@ -13,6 +13,8 @@ const mdText: string = currFile.value.context;
 const mdTitle: string = currFile.value.fileName;
 const vditor = ref();
 
+const userInfo = ref(JSON.parse(sessionStorage.getItem("userInfo") || "{}"));
+
 const titleValue = ref(mdTitle);
 provide('titleValue', titleValue)
 
@@ -63,12 +65,22 @@ function saveHTML() {
   saveAs(blob, title);
 }
 
+function savePDF() {
+
+}
+
 function save() {
   console.log("save");
+  if (Object.keys(userInfo.value).length === 0) {
+    alert("请先登录");
+    return;
+  }
   const jsonData = {
     context: vditor.value.getValue(),
-    fileName: titleValue.value
-  }
+    fileName: titleValue.value,
+    actionType: "Add",
+    userName: userInfo.value.uname,
+  };
   const jsonContent = JSON.stringify(jsonData);
   const title = titleValue.value + '.json';
   const blob = new Blob([jsonContent], {
@@ -81,7 +93,8 @@ function save() {
 <template>
   <div class="common-layout">
     <el-container>
-      <HeaderNav @onOutputMDClicked="saveMarkdown" @onOutputHTMLClicked="saveHTML" @onSaveButtonClicked="save" />
+      <HeaderNav @onOutputMDClicked="saveMarkdown" @onOutputHTMLClicked="saveHTML" @onOutputPDFClicked="savePDF"
+        @onSaveButtonClicked="save" />
       <el-container>
         <SideBar />
         <el-main>

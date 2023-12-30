@@ -2,14 +2,15 @@
   <el-aside width="200px">Aside</el-aside>
 </template>
 
-<script></script>
+<script>
+const userInfo = JSON.parse(sessionStorage.getItem("userInfo") || "{}");
+</script>
 
 <style>
 .el-aside {
   position: fixed;
   top: 60px;
   left: 0;
-  width: 200px;
   height: calc(100% - 60px);
   background-color: #fff;
   box-shadow: 0 2px 12px 2px rgba(0, 0, 0, 0.1);
