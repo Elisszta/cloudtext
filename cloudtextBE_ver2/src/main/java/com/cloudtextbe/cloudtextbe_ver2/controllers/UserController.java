@@ -23,7 +23,7 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public Result<User> registController(@RequestBody User newUser){
+    public Result<User> registController(@RequestBody User newUser) {
         User user = userService.registerService(newUser);
         if(user!=null){
             return Result.success(user,"register success");
