@@ -2,7 +2,6 @@ package com.cloudtextbe.cloudtextbe_ver2.controllers;
 
 import com.cloudtextbe.cloudtextbe_ver2.domain.User;
 import com.cloudtextbe.cloudtextbe_ver2.services.UserService;
-import com.cloudtextbe.cloudtextbe_ver2.services.serviceimpl.UserServiceImpl;
 import com.cloudtextbe.cloudtextbe_ver2.utils.Result;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;

@@ -11,9 +11,8 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long uid;
 
-    // 用户名属性varchar对应String
+    /** User's name */
     private String uname;
-
-    // 密码属性varchar对应String
+    /** User's Password */
     private String password;
 }

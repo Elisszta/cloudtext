@@ -1,7 +1,7 @@
 package com.cloudtextbe.cloudtextbe_ver2.services.serviceimpl;
 
 import com.cloudtextbe.cloudtextbe_ver2.domain.User;
-import com.cloudtextbe.cloudtextbe_ver2.repos.UserDao;
+import com.cloudtextbe.cloudtextbe_ver2.daos.UserDao;
 import com.cloudtextbe.cloudtextbe_ver2.services.UserService;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;

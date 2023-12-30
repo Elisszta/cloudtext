@@ -42,7 +42,7 @@ export default {
                     { required: true, message: "密码不能为空！", trigger: "blur" },
                 ],
             },
-            loading: false, // 是否显示加载动画
+            loading: false,
         };
     },
     methods: {
@@ -133,7 +133,6 @@ export default {
 </script>
   
 <style scoped>
-/* 设置登录面板居中，宽度为400px */
 .box-card {
     position: fixed;
     top: 50%;
@@ -143,7 +142,6 @@ export default {
     width: 400px;
 }
 
-/* 设置登录面板中的表单居中 */
 .login-from {
     margin: auto auto;
 }
