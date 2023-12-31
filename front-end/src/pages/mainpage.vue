@@ -42,7 +42,7 @@ onMounted(() => {
       max: 51200,
     },
     cache: {
-      enable: false,
+      enable: true,
     },
   });
 });
