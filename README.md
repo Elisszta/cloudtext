@@ -49,6 +49,19 @@ sequenceDiagram
 	MainPage->Server: 删除文件
 ```
 
+####  用户类型以及存取方案
+
+```mermaid
+graph TD;
+AnonymousUser-->LoginService;
+LoginUser-->LogOutService;
+LoginUser-->FileService;
+FileService-->FileSave;
+FileService-->FileRm;
+FileService-->GetFileContext;
+FileService-->GetFileList;
+```
+
 
 
 #### 客户端功能：
@@ -57,6 +70,11 @@ sequenceDiagram
 - MainPage: 文本编辑，内容导出，发送内容保存信号，发送文件列表请求，发送文件删除请求，账号登出
 
 
+
+#### 服务端功能:
+
+- 保存已经注册的用户信息以及各个用户所上传保存的文件
+- 通过http协议接收客户端发来的各种请求并在认证通过后返回所请求的资源
 
 
 
@@ -276,6 +294,10 @@ CloudTextBeVer2Application *-- FileController
 
 后端部分中，主要分为了`configs, controllers, daos, domain, services, utils`6大包。`configs`包中包含了后端程序所需的所有配置类；`utils`包中包含了一些IO以及信息包装类，方便开发；`domain`包中包含了从前端发送来的json中获取信息以及在后端内部传递信息的数据类；`daos`包承担了数据库/文件系统读写的任务；`service`类中包含了服务层的接口以及实现接口的子包`serviceImpl`,`controllers`包中定义了一些控制器，用于与前端交流。
 
+```mermaid
+graph TD;
+```
+
 
 
 ---
@@ -302,6 +324,22 @@ HeaderNav-->MainPage
 
 #### 后端：
 
+后端内部架构如下：
+
+```mermaid
+graph TD;
+CloudTextBE --> FileController;
+CloudTextBE --> UserController;
+FileController --> FileService;
+UserController --> UserService;
+FileService --> FileDao;
+UserService --> UserDao;
+UserDao --> JpaRepository;
+FileDao --> FileUtils;
+```
+
+
+
 后端在完成构建后只有一个`jar`包，在服务器终端直接`java -jar cloudtextBE_ver2.jar`运行即可。
 
 
@@ -315,6 +353,8 @@ HeaderNav-->MainPage
 #### 后端：
 
 后端主要使用了`spring boot + spring web`的框架，在开发初期拟添加`spring security`组件用于提升整体安全水平，但奈何水平有限，使用的`spring boot3 + spring security6`的组合在网上的资料较少，出现了一些难以解决的疑难杂症，大量查阅国内外相关资料后仍无法找到具体原因。因此无奈选择放弃使用`spring security`组件，仅使用`spring boot + spring web`。后端的主要技术关键点就是spring框架，自底向上设计数据访问层，服务层以及控制器层。其中遇到了不少问题，例如在刚上手开发时，对spring框架的结构不甚了解，导致代码编写时没有条例逻辑，在阅读了几个github上的项目源码后才对整个过程有了一定的了解，才使得接下来的后端开发能顺利进行下去。又例如对http方法以及spring web对这些方法的处理方式不够了解导致后端为一个接口映射了对应`get`方法的控制器，在使用postman测试时没有发现任何问题，但是当前后端联合调试时发现前端发送消息后总会收到状态码400，经过查阅后得知spring web中标注了`@GetMapping(<url>)`的控制器无法从前端发送的json中接收请求体，将`Get`改为`Post`后前后端可以正常通信。在开发过程中这样的小问题不断发生，但是通过不断查阅资料以及询问LLM，最终还是克服了这些问题并完成了后端的编写。
+
+在编写的过程中，借用了UCB CS61B 21sp课程中和文件IO相关的代码，在此向UCB CS61B课程的所有教职工，尤其是P. N. Hilfinger教授表示感谢。
 
 
 
