@@ -6,6 +6,8 @@ import com.cloudtextbe.cloudtextbe_ver2.services.UserService;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
+import static com.cloudtextbe.cloudtextbe_ver2.utils.FileUtils.*;
+
 @Service
 public class UserServiceImpl implements UserService {
     @Resource
@@ -13,7 +15,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User loginService(User user) {
-        User findUser = userDao.findByUnameAndPassword(user.getUname(), user.getPassword());
+        User findUser = userDao.findByUnameAndPassword(user.getUname(), sha1(user.getPassword()));
         if(findUser != null) {
             findUser.setPassword("");
         }
@@ -25,6 +27,7 @@ public class UserServiceImpl implements UserService {
         if (userDao.findByUname(user.getUname()) != null) {
             return null;
         } else {
+            user.setPassword(sha1(user.getPassword()));
             User newUser = userDao.save(user);
             if (newUser != null) {
                 newUser.setPassword("");
